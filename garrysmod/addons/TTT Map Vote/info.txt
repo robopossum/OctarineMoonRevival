@@ -1,0 +1,7 @@
+"AddonInfo"
+{
+	"name" "TTT Map Vote"
+	"author_name" "author"
+	"info" "Voting like Fretta. Kinda based on http://steamcommunity.com/sharedfiles/filedetails/?id=107053817&searchtext=ttt
+Aye."
+}
