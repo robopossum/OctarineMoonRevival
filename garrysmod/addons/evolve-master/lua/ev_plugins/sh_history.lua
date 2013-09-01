@@ -12,9 +12,9 @@ if( SERVER ) then
 	HISTORY.PlayerData = {}
 
 	function HISTORY.LoadHistory()
-		if ( file.Exists( "ev_warnhistory.txt" ) ) then
+		if ( file.Exists( "ev_warnhistory.txt" , "DATA" ) ) then
 			debug.sethook()
-			HISTORY.PlayerData = glon.decode( file.Read( "ev_warnhistory.txt" ) )
+			HISTORY.PlayerData =  von.deserialize( file.Read( "ev_warnhistory.txt", "DATA" ))
 		else
 			HISTORY.PlayerData = {}
 		end
@@ -23,7 +23,11 @@ if( SERVER ) then
 	function HISTORY.SaveHistory()
 		local h_a, h_b, h_c = debug.gethook()
 		debug.sethook()
-		file.Write( "ev_warnhistory.txt", glon.encode( HISTORY.PlayerData ) )
+                if ( file.Exists( "ev_warnhistory.txt" , "DATA" ) ) then
+                        file.Append( "ev_warnhistory.txt",  von.serialize(HISTORY.PlayerData) )
+		else
+                        file.Write( "ev_warnhistory.txt", von.serialize(HISTORY.PlayerData)  )
+		end
 		debug.sethook( nil, h_a, h_b, h_c )
 	end
 
@@ -134,7 +138,7 @@ function PLUGIN:Call( ply, args )
 			ply:PrintMessage( 2, msg .. "================\n" )
 			
 			evolve:Notify( ply, evolve.colors.red, pl:Nick(), evolve.colors.white, "'s history has been printed in the console." )
-		elseif( args[2] == "b" || args[2] == "breif" ) then
+		elseif( args[2] == "b" || args[2] == "brief" ) then
 			evolve:Notify( ply, evolve.colors.red, "Not implemented!" )
 		elseif( args[2] == "c" || args[2] == "count" ) then
 			local count = 0
@@ -145,7 +149,7 @@ function PLUGIN:Call( ply, args )
 		elseif( args[2] == "x" || args[2] == "clear" ) then
 			HISTORY.ClearHistory( pl:UniqueID() )
 		else
-			evolve:Notify( ply, evolve.colors.red, "Invalid argument '" .. args[2] .. "'" )
+			evolve:Notify( ply, evolve.colors.red, "Invalid argument: Please specify All/Brief/Count" )
 		end
 	else
 		evolve:Notify( ply, evolve.colors.red, evolve.constants.notallowed )
@@ -158,7 +162,7 @@ function PLUGIN:Menu( arg, players )
 	else
 		return "Show History", evolve.category.administration, {
 			{ "All", "all" },
-			{ "Breif", "breif" },
+			{ "Brief", "brief" },
 			{ "Event Count", "count" },
 			{ "Clear history", "clear" },
 		}

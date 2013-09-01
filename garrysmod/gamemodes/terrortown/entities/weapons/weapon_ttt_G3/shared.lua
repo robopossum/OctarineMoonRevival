@@ -20,16 +20,16 @@ SWEP.Kind = WEAPON_HEAVY
 SWEP.WeaponID = AMMO_RIFLE
 
 SWEP.Primary.Delay          = 0.31
-SWEP.Primary.Recoil         = 1.5
+SWEP.Primary.Recoil         = 1.6
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "357"
-SWEP.Primary.Damage = 32
-SWEP.Primary.Cone = 0.02
+SWEP.Primary.Damage = 31
+SWEP.Primary.Cone = 0.006
 SWEP.Primary.ClipSize = 20
 SWEP.Primary.ClipMax = 60 -- keep mirrored to ammo
 SWEP.Primary.DefaultClip = 20
 
-SWEP.HeadshotMultiplier = 3
+SWEP.HeadshotMultiplier = 2
 
 SWEP.AutoSpawnable      = true
 SWEP.AmmoEnt = "item_ammo_357_ttt"
@@ -71,45 +71,6 @@ function SWEP:SecondaryAttack()
     end
     
     self.Weapon:SetNextSecondaryFire( CurTime() + 0.3)
-end
-
-function SWEP:PrimaryAttack(worldsnd)
-
-   
-
-   if not self:CanPrimaryAttack() then return end
-
-   
-self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, 1, self:GetPrimaryCone() )
- if not worldsnd then
-      self.Weapon:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
-   elseif SERVER then
-      sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
-   end
-   
-   burstDelay = 0.1
-   burstCount = 2
-
-timer.Create( "my_timer", burstDelay, burstCount - 1, function()
-self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, 1, self:GetPrimaryCone() )
- if not worldsnd then
-      self.Weapon:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
-   elseif SERVER then
-      sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
-   end
-
-end)
-
-   self:TakePrimaryAmmo( 1 )
-   
-   timer.Destroy("my_timer")
-   
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-
-   local owner = self.Owner
-   if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
-
-   owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
 end
 
 function SWEP:PreDrop()

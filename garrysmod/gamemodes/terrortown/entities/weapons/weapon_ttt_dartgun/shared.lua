@@ -1,7 +1,7 @@
 
 if SERVER then
 	AddCSLuaFile( "shared.lua" )
-	resource.AddFile("materials/vgui/ttt/icon_dart.vmt")
+	resource.AddFile("materials/VGUI/ttt/icon_dart.vmt")
 end
 
 SWEP.HoldType           = "crossbow"
@@ -11,7 +11,7 @@ if CLIENT then
 
 	SWEP.Slot               = 7
 
-	SWEP.Icon = "vgui/ttt/icon_dart"
+	SWEP.Icon = "VGUI/ttt/icon_dart"
 
 	SWEP.EquipMenuData = {
 		type = "Weapon",

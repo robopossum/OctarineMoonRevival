@@ -74,7 +74,7 @@ if( SERVER ) then
 		end
 		
 		local propspec_force = CreateConVar("ttt_spec_prop_force", "110")
-		local propspec_boosted_force = CreateConVar("ttt_spec_prop_boosted_force", "110")
+		local propspec_boosted_force = CreateConVar("ttt_spec_prop_boosted_force", "200")
 		
 		function PROPSPEC.Key(ply, key)
 			local ent = ply.propspec.ent
@@ -195,10 +195,11 @@ if( SERVER ) then
 	
 	local propspec_dmgscale = CreateConVar( "ttt_spec_prop_damage_scale", "0" )
 	
-	function PLUGIN:EntityTakeDamage( ent, inflictor, attacker, amount, dmginfo )
-		//if not inflictor or inflictor:IsWorld() or inflictor:IsPlayer() or inflictor:IsWeapon() then return end
+	function PLUGIN:EntityTakeDamage( ent, dmginfo )
+		local infl = dmginfo:GetInflictor()
+		//if not infl or infl:IsWorld() or infl:IsPlayer() or infl:IsWeapon() then return end
 		
-		if inflictor.spectated then
+		if infl.spectated then
 			dmginfo:ScaleDamage( propspec_dmgscale:GetFloat() )
 		end
 	end

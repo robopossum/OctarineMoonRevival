@@ -223,7 +223,7 @@ end
 if CLIENT then
 	function PLUGIN:PostGamemodeLoaded()
 		function RADIO:GetTargetType()
-			if not ValidEntity(LocalPlayer()) then return end
+			if not IsValid(LocalPlayer()) then return end
 			local trace = LocalPlayer():GetEyeTrace(MASK_SHOT)
 
 			if not trace or (not trace.Hit) or (not IsValid(trace.Entity)) then return end

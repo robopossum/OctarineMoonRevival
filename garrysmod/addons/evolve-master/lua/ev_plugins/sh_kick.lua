@@ -25,7 +25,7 @@ function PLUGIN:Call( ply, args )
 				end
 				
 				HISTORY.AddKick( ply, pl[1]:UniqueID(), reason )
-				
+
 				if ( #reason == 0 || reason == "No reason" ) then
 					evolve:Notify( evolve.colors.blue, ply:Nick(), evolve.colors.white, " has kicked ", evolve.colors.red, pl[1]:Nick(), evolve.colors.white, "." )
 					

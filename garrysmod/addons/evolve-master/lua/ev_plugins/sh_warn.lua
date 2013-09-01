@@ -20,7 +20,7 @@ function PLUGIN:Warn( admin, ply, reason, skipround )
 		ply.SlayReason = reason
 		table.insert( self.SlayNextRound, ply:UniqueID() )
 	end
-	
+
 	HISTORY.AddWarning( admin, ply:UniqueID(), reason )
 end
 

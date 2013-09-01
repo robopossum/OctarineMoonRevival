@@ -113,7 +113,7 @@ function PLUGIN:Call( ply, args )
 		local nick = evolve:GetProperty( uid, "Nick" )
 		
 		evolve:Ban( uid, length, reason, ply:UniqueID() )
-		HISTORY.AddBan( ply, uid, reason, length )
+                HISTORY.AddBan( ply, uid, reason, length )
 		
 		if ( length == 0 ) then
 			evolve:Notify( evolve.colors.blue, ply:Nick(), evolve.colors.white, " banned ", evolve.colors.red, nick, evolve.colors.white, " permanently (" .. reason .. ")." )

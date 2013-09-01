@@ -1,7 +1,7 @@
 --Amount of players who have to request a vote, 1=all, 0.5=half of everyone
 local votereqperc= 0.5
 --Voting time
-local votetime   = 30
+local votetime   = 20
 
 --Checks if gamemode is terrortown
 if GetConVarString("gamemode") == "terrortown" then
@@ -21,11 +21,14 @@ if SERVER then
 	util.AddNetworkString("thePoolIsClosedAndSoIsVoting")
 	util.AddNetworkString("playerWantsToStartVote")
 	
-	print("This is a test mod and has been loaded on the server")
+	print("TTT Map Vote has loaded onto the server")
 	
-	local maplist={}
+	local maps ={}
 
 	local maps = string.Explode("\n",file.Read("mapcycle.txt","GAME"))
+	for i=1,table.Count(maps) do
+			maps[i] = string.Trim(maps[i])
+	end
 	table.remove(maps)
 	
 	if not table.HasValue(maps,game.GetMap()) then
@@ -33,7 +36,7 @@ if SERVER then
 	end
 	
 	local curmap=table.remove(maps,table.KeyFromValue(maps, game.GetMap()))
-	table.insert(maps, curmap)	
+	table.insert(maps, curmap)
 	
 	net.Receive("userChangedVote",function(len, ply)
 		local mapID=net.ReadInt(16)
@@ -74,18 +77,12 @@ if SERVER then
 		votestarted=false
 
 	end
-	--hook.Add("TTTBeginRound", "roundReallyStart", votingEnded)
 	
 	
 	local voteover=false
 	
 	function startVoteMaybe()
-		local maxtime = GetConVarNumber("ttt_roundtime_minutes") or 10
-		if (GetConVarNumber("ttt_haste") or 0) == 1 then
-				maxtime = (GetConVarNumber("ttt_haste_starting_minutes") or 5) + table.Count(player.GetAll())*(GetConVarNumber("ttt_haste_minutes_per_death") or 0.5)
-		end
-		maxtime = maxtime + GetConVarNumber("ttt_preptime_seconds") + GetConVarNumber("ttt_posttime_seconds")
-		if GetGlobalInt("ttt_rounds_left", 6) == 1 or math.floor(((GetGlobalInt("ttt_time_limit_minutes") or 60)*60 - CurTime())/60) <= maxtime or voteoverride then 
+		if GetGlobalInt("ttt_rounds_left") == 1 or voteoverride then 
 			if voteover == false then
 				voteoverride = false
 				print("Sending vote request")
@@ -103,12 +100,9 @@ if SERVER then
 		end
 		return false
 	end
---	hook.Add( "TTTPrepareRound", "roundStartThingy",startVoteMaybe)
---startVoteMaybe
-	
+	hook.Add( "TTTEndRound", "roundStartThingy",startVoteMaybe)
 
-	function voterequested(ply,strText,plyalive)
-		if string.Explode(" ", strText)[1] == "!letsvote" then
+	function voterequested(ply)
 			if voteoverride == false then
 		
 				if votestartrequests[ply:UniqueID()] == 1 then
@@ -143,11 +137,13 @@ if SERVER then
 				
 				return ""
 			end
-		end
 		return strText
+        end
+
+        function overrideVote(ply)
+              voteoverride = true
+        end 
 	end
-	hook.Add("PlayerSay", "startvotemaybe", voterequested)
-end
 end
 
 --Client Side
@@ -269,7 +265,7 @@ if CLIENT then
 				"",
 				Color(100,244,0,255),
 				votename,
-				" wants to start a map vote! Type say !letsvote if you too want to vote.\n",
+				" wants to start a map vote! Type say !rtv if you too want to vote.\n",
 				Color(100,200,0,255),
 				"Votes: "..votecount.."/"..playercount
 			)

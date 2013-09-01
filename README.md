@@ -4,7 +4,7 @@ Octarine Moon Revival
 Originally created by Team Octarine Moon
 Revived by Realmworks
 
-http://www.octarinemoon.nn.pe/
+Site is coming...
 
 ### Garrys Mod 13
 By Team Garry
@@ -64,7 +64,7 @@ Acting like a mixture between the Newton Launcher and the Discombob, the Newton
 nade can send several people flying.
 
 ### Death station (Traitor)
-Looks identical to the gealth station, quickly removes an innocents health. If they
+Looks identical to the health station, quickly removes an innocents health. If they
 do not pay attention, they will quickly find themselves on 1 hp. It does not 
 kill the innocent, but leaves them very close to death.
 

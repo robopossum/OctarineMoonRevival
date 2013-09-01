@@ -1,6 +1,6 @@
 local PLUGIN = {}
 PLUGIN.Title = "Set Detective"
-PLUGIN.Description = "Promote a player to Detectove."
+PLUGIN.Description = "Promote a player to Detective."
 PLUGIN.Author = "Lawton27"
 PLUGIN.ChatCommand = "setdetective"
 PLUGIN.Usage = "[players] - (optional)"

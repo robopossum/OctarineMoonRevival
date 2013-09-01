@@ -21,9 +21,9 @@ SWEP.Kind = WEAPON_HEAVY
 SWEP.WeaponID = AMMO_SHOTGUN
 
 SWEP.Primary.Ammo = "Buckshot"
-SWEP.Primary.Damage = 11
-SWEP.Primary.Cone = 0.085
-SWEP.Primary.Delay = 0.8
+SWEP.Primary.Damage = 13
+SWEP.Primary.Cone = 0.1
+SWEP.Primary.Delay = 0.75
 SWEP.Primary.ClipSize = 8
 SWEP.Primary.ClipMax = 24
 SWEP.Primary.DefaultClip = 8
@@ -35,12 +35,13 @@ SWEP.ViewModel			= "models/weapons/v_shot_xm1014.mdl"
 SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
 SWEP.Primary.Sound			= Sound( "Weapon_XM1014.Single" )
 SWEP.Primary.Recoil			= 7
+SWEP.HeadshotMultiplier = 1.4
 --SWEP.IronSightsPos 		= Vector( 5.7, -3, 3 )
 
 SWEP.IronSightsPos = Vector( 5.14, -5, 2.14 )
 SWEP.IronSightsAng = Vector(0, 0.8, 0)
 
-SWEP.reloadtimer = 0
+SWEP.reloadtimer = 4
 
 function SWEP:SetupDataTables()
    self:DTVar("Bool", 0, "reloading")
